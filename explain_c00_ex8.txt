@@ -1,0 +1,86 @@
+1-
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+Esta função recebe um caractere c e usa a função write do sistema para escrever esse caractere no terminal (saída padrão).
+O write(1, &c, 1) escreve um byte (o caractere c) no descritor de arquivo 1, que representa a saída padrão.
+
+2-
+void	ft_check_print(int x[], int n)
+{
+	int i;
+	int yes;
+
+	i = 0;
+	yes = 1;
+	while (i < n - 1)
+	{
+		if (!(x[i] < x[i + 1]))
+			yes = 0;
+		i++;
+	}
+	if (yes == 1)
+	{
+		i = 0;
+		while (i < n)
+		{
+			ft_putchar(x[i]);
+			i++;
+		}
+		if (x[0] != '9' - n + 1)
+		{
+			ft_putchar(',');
+			ft_putchar(' ');
+		}
+	}
+}
+
+ft_check_print verifica se o array x de tamanho n está em ordem crescente.
+A variável yes é inicialmente definida como 1 (verdadeiro). Se algum par de elementos consecutivos não estiver em ordem crescente (x[i] >= x[i + 1]), yes é definido como 0.
+Se yes for 1 após a verificação, os elementos do array x são impressos usando ft_putchar.
+Se o primeiro elemento de x não for '9' - n + 1, imprime uma vírgula seguida de um espaço.
+
+3-
+void	create_while(int x[], int k, int n)
+{
+	if (k == n - 1)
+	{
+		x[k] = '0';
+		while (x[k] <= '9')
+		{
+			if (n == 9 && x[0] > '1')
+				break ;
+			ft_check_print(x, n);
+			x[k]++;
+		}
+	}
+	else
+	{
+		x[k] = '0';
+		while (x[k] <= '9')
+		{
+			create_while(x, k + 1, n);
+			x[k]++;
+		}
+	}
+}
+
+Esta função é responsável por gerar todas as combinações de n números.
+Se k (índice atual) for igual a n - 1, a função inicializa x[k] com '0' e incrementa até '9', chamando ft_check_print para verificar e imprimir a combinação.
+Se k não for igual a n - 1, a função inicializa x[k] com '0' e recursivamente chama create_while para o próximo índice k + 1.
+
+4-
+
+void	ft_print_combn(int n)
+{
+	int x[n];
+
+	create_while(x, 0, n);
+}
+
+
+Esta é a função principal que inicializa um array x de tamanho n e chama create_while para começar a gerar combinações a partir do índice 0.
+O objetivo geral do código é gerar todas as combinações de n dígitos em ordem crescente, imprimindo-as no formato especificado. Ele faz isso verificando todas as possíveis combinações e imprimindo aquelas que estão em ordem crescente, separadas por vírgulas e espaços, exceto a última combinação possível.
