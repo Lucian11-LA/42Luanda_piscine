@@ -1,0 +1,26 @@
+shel01 -ex08
+Esse script em bash realiza uma série de transformações em strings e em números usando uma série de comandos shell padrão. Vou explicar cada parte:
+
+1. `#!/bin/bash`: Esta linha é chamada de shebang e é usada para indicar ao sistema operacional qual interpretador de shell deve ser usado para executar o script, neste caso, o bash.
+
+2. `echo $FT_NBR1 = \'\?\"\\\"\'\\ + $FT_NBR2=rcrdmddd`: Este comando echo exibe uma string que contém duas variáveis, `$FT_NBR1` e `$FT_NBR2`, cada uma com um valor atribuído. Os valores são representados como strings de caracteres.
+
+3. `sed "s/\'/0/g"`: Este comando sed substitui todas as ocorrências do caractere de aspas simples (`'`) por `0`.
+
+4. `tr '\\\"\?\!' 1234`: Este comando tr traduz os caracteres `\\\"\?\!` nos caracteres `1234`, respectivamente. Aqui, os caracteres estão escapados com `\` porque eles têm significados especiais em expressões regulares.
+
+5. `tr 'mrdoc' 01234`: Outro comando tr que traduz os caracteres `mrdoc` nos caracteres `01234`, respectivamente.
+
+6. `xargs echo 'obase=13; ibase=5;'`: O comando xargs é usado para passar o resultado anterior como argumentos para o comando echo. Isso faz com que o echo imprima as strings `'obase=13; ibase=5;'` seguidas pelo resultado da substituição tr.
+
+7. `bc`: Este comando bc (calculadora de precisão arbitrária) é usado para realizar operações matemáticas.
+
+8. `tr 0123456789ABC 'gtaio luSnemf'`: Outro comando tr que traduz os caracteres `0123456789ABC` nos caracteres `gtaio luSnemf`, respectivamente.
+
+Agora, em termos de funcionamento geral:
+
+- A string inicial é transformada para substituir caracteres por seus equivalentes numéricos.
+- Em seguida, a string resultante é convertida de base 5 para base 13 usando o bc.
+- Por fim, a string resultante é transformada novamente, desta vez substituindo os caracteres numéricos por letras, conforme especificado.
+
+Essa sequência de comandos parece estar relacionada a alguma tarefa específica ou desafio, mas é difícil dizer exatamente o que sem mais contexto.
