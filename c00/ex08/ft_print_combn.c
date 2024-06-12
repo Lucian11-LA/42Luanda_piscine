@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_combn.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 11:51:21 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/12 18:46:20 by lalfredo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include <unistd.h>
 
 void	ft_putchar(char c)
@@ -7,8 +18,8 @@ void	ft_putchar(char c)
 
 void	ft_check_print(int x[], int n)
 {
-	int i;
-	int yes;
+	int	i;
+	int	yes;
 
 	i = 0;
 	yes = 1;
@@ -56,17 +67,4 @@ void	create_while(int x[], int k, int n)
 			x[k]++;
 		}
 	}
-}
-
-void	ft_print_combn(int n)
-{
-	int x[n];
-
-	create_while(x, 0, n);
-}
-
-int main()
-{
-    ft_print_combn(2);
-    return 0;
 }
