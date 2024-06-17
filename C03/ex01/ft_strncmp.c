@@ -1,50 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 09:04:44 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/12 09:04:52 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/15 10:57:55 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/15 11:04:11 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <unistd.h>
-
-void	ft_putchar(char c)
+int	ft_strncmp(char *s1, char *s2, unsigned int n)
 {
-	write(1, &c, 1);
-}
+	unsigned int	i;
 
-void	ft_print_comb(void)
-{
-	int	a;
-	int	b;
-	int	c;
-
-	a = '0';
-	while (a <= '7')
+	i = 0;
+	while ((s1[i] && s2[i]) && (i < n))
 	{
-		b = a + 1;
-		while (b <= '8')
+		if (s1[i] > s2[i])
 		{
-			c = b + 1;
-			while (c <= '9')
-			{
-				ft_putchar(a);
-				ft_putchar(b);
-				ft_putchar(c);
-				if (a != '7')
-				{
-					ft_putchar(',');
-					ft_putchar(' ');
-				}
-				c++;
-			}
-			b++;
+			return (1);
 		}
-		a++;
+		else
+		{
+			return (-1);
+		}
+		i++;
 	}
+	return (0);
 }

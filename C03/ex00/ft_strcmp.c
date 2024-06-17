@@ -1,50 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 09:04:44 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/12 09:04:52 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/15 10:09:00 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/15 10:48:47 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <unistd.h>
-
-void	ft_putchar(char c)
+int	ft_strcmp(char *s1, char *s2)
 {
-	write(1, &c, 1);
-}
+	int	i;
 
-void	ft_print_comb(void)
-{
-	int	a;
-	int	b;
-	int	c;
-
-	a = '0';
-	while (a <= '7')
+	i = 0;
+	while ((s1[i] && s2[i]) && (s1[i] == s2[i]))
 	{
-		b = a + 1;
-		while (b <= '8')
-		{
-			c = b + 1;
-			while (c <= '9')
-			{
-				ft_putchar(a);
-				ft_putchar(b);
-				ft_putchar(c);
-				if (a != '7')
-				{
-					ft_putchar(',');
-					ft_putchar(' ');
-				}
-				c++;
-			}
-			b++;
-		}
-		a++;
+		i++;
 	}
+	return (s1[i] - s2[i]);
 }
