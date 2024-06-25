@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 10:57:55 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/18 10:42:01 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/18 14:03:22 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/18 14:11:38 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
-{
-	unsigned int	i;
+#include <stdio.h>
 
-	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && (i < n))
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putnbr(int nb)
+{
+	long int	n;
+
+	n = nb;
+	if (n < 0)
 	{
-		if (s1[i] > s2[i])
-		{
-			return (1);
-		}
-		else if (s1[i] < s2[i])
-		{
-			return (-1);
-		}
-		i++;
+		ft_putchar('-');
+		n = n * (-1);
 	}
-	return (0);
+	if (n < 10)
+	{
+		ft_putchar('0' + n);
+	}
+	else
+	{
+		ft_putnbr(n / 10);
+		ft_putchar(48 + (n % 10));
+	}
 }

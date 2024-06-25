@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_range.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 10:57:55 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/18 10:42:01 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/24 10:19:25 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/24 11:01:48 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+#include <stdlib.h>
+
+int	*ft_range(int min, int max)
 {
-	unsigned int	i;
+	int	*array;
+	int	i;
 
 	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && (i < n))
+	if (min >= max)
 	{
-		if (s1[i] > s2[i])
-		{
-			return (1);
-		}
-		else if (s1[i] < s2[i])
-		{
-			return (-1);
-		}
+		return ((void *)0);
+	}
+	array = (int *)malloc(sizeof(int) * (max - min));
+	if (!array)
+		return ((void *)0);
+	while (min < max)
+	{
+		array[i] = min;
+		min++;
 		i++;
 	}
-	return (0);
+	return (array);
 }

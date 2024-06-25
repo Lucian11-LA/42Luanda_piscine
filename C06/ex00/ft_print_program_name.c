@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_print_program_name.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 10:57:55 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/18 10:42:01 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/23 08:00:53 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/23 08:18:24 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <unistd.h>
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+void	ft_putchar(char c)
 {
-	unsigned int	i;
+	write(1, &c, 1);
+}
+
+int	main(int argc, char **argv)
+{
+	int	i;
 
 	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && (i < n))
+	while (argv[0][i] != '\0' && argc)
 	{
-		if (s1[i] > s2[i])
-		{
-			return (1);
-		}
-		else if (s1[i] < s2[i])
-		{
-			return (-1);
-		}
+		ft_putchar(argv[0][i]);
 		i++;
 	}
+	ft_putchar('\n');
 	return (0);
 }

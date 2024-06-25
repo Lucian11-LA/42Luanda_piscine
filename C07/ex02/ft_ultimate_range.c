@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 10:57:55 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/18 10:42:01 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/24 11:12:06 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/24 14:07:52 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdlib.h>
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+int	ft_ultimate_range(int **range, int min, int max)
 {
-	unsigned int	i;
+	int	i;
+	int	*temp;
 
+	if (min >= max)
+		return (-1);
+	temp = (int *)malloc(sizeof(int) * (max - min));
+	if (!temp)
+		return (-1);
 	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && (i < n))
+	while (min < max)
 	{
-		if (s1[i] > s2[i])
-		{
-			return (1);
-		}
-		else if (s1[i] < s2[i])
-		{
-			return (-1);
-		}
+		temp[i] = min;
+		min++;
 		i++;
 	}
-	return (0);
+	*range = temp;
+	return (i);
 }

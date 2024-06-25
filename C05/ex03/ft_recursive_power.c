@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_recursive_power.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 10:57:55 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/18 10:42:01 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/20 08:43:32 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/20 09:02:35 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+int	ft_recursive_power(int nb, int power)
 {
-	unsigned int	i;
+	int	result;
 
-	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && (i < n))
-	{
-		if (s1[i] > s2[i])
-		{
-			return (1);
-		}
-		else if (s1[i] < s2[i])
-		{
-			return (-1);
-		}
-		i++;
-	}
-	return (0);
+	result = nb;
+	if (power > 1)
+		return (nb * ft_recursive_power(nb, (power - 1)));
+	if (power == 0)
+		return (1);
+	if (power < 0)
+		return (0);
+	return (result);
 }

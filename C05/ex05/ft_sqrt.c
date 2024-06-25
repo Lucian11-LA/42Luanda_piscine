@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 10:57:55 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/18 10:42:01 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/22 15:12:33 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/22 15:36:04 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+int	ft_sqrt(int nb)
 {
-	unsigned int	i;
+	long	index;
+	long	b;
 
-	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && (i < n))
+	b = nb;
+	if (b < 0)
 	{
-		if (s1[i] > s2[i])
+		return (0);
+	}
+	if (b == 1)
+	{
+		return (1);
+	}
+	index = 2;
+	if (b >= 2)
+	{
+		while ((index * index) <= b)
 		{
-			return (1);
+			if (index * index == b)
+			{
+				return (index);
+			}
+			index++;
 		}
-		else if (s1[i] < s2[i])
-		{
-			return (-1);
-		}
-		i++;
 	}
 	return (0);
 }

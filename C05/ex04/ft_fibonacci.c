@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_fibonacci.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/15 10:57:55 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/18 10:42:01 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/22 14:58:07 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/22 15:09:32 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+int	ft_fibonacci(int index)
 {
-	unsigned int	i;
+	int	n;
 
-	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && (i < n))
+	if (index < 0)
+		return (-1);
+	if (index == 0 || index == 1)
+		return (0);
+	if (index >= 2 && index <= 3)
+		return (1);
+	else
 	{
-		if (s1[i] > s2[i])
-		{
-			return (1);
-		}
-		else if (s1[i] < s2[i])
-		{
-			return (-1);
-		}
-		i++;
+		n = ft_fibonacci(index - 1) + ft_fibonacci(index - 2);
+		return (n);
 	}
-	return (0);
 }
