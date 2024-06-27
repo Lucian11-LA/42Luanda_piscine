@@ -11,69 +11,72 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
-#include <stdlib.h>
-
-int	ft_strlen(char *str)
+int	ft_str_length(char *str)
 {
-	int	i;
+	int	index;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	index = 0;
+	while (str[index])
+		index++;
+	return (index);
 }
 
 char	*ft_strcpy(char *dest, char *src)
 {
-	int	i;
+	int	index;
 
-	i = 0;
-	while (src[i])
+	index = 0;
+	while (src[index] != '\0')
 	{
-		dest[i] = src[i];
-		i++;
+		dest[index] = src[index];
+		index++;
 	}
-	dest[i] = '\0';
+	dest[index] = '\0';
 	return (dest);
 }
 
-int	ft_final_length(char **strings, int size, int sep_length)
+int	ft_compute_final_length(char **strings, int size, int sep_length)
 {
-	int	len;
-	int	i;
+	int	final_length;
+	int	index;
 
-	len = 0;
-	i = 0;
-	while (i < size)
-		len += ft_strlen(strings[i++]) + sep_length;
-	return (len - sep_length);
+	final_length = 0;
+	index = 0;
+	while (index < size)
+	{
+		final_length += ft_str_length(strings[index]);
+		final_length += sep_length;
+		index++;
+	}
+	final_length -= sep_length;
+	return (final_length);
 }
 
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
 	int		full_length;
-	int		i;
-	char	*result;
-	char	*ptr;
+	int		index;
+	char	*string;
+	char	*d;
 
-	i = 0;
-	full_length = ft_final_length(strs, size, ft_strlen(sep));
-	result = (char *)malloc((full_length + 1) * sizeof(char));
-	ptr = result;
-	if (!result)
-		return (NULL);
-	while (i < size)
+	if (size == 0)
+		return ((char *)malloc(sizeof(char)));
+	full_length = ft_compute_final_length(strs, size, ft_str_length(sep));
+	d = (string = (char *)malloc((full_length + 1) * sizeof(char)));
+	if (!d)
+		return (0);
+	index = 0;
+	while (index < size)
 	{
-		ptr = ft_strcpy(ptr, strs[i]);
-		ptr += ft_strlen(strs[i]);
-		if (i < size - 1)
+		ft_strcpy(d, strs[index]);
+		d += ft_str_length(strs[index]);
+		if (index < size - 1)
 		{
-			ptr = ft_strcpy(ptr, sep);
-			ptr += ft_strlen(sep);
+			ft_strcpy(d, sep);
+			d += ft_str_length(sep);
 		}
-		i++;
+		index++;
 	}
-	*ptr = '\0';
-	return (result);
+	*d = '\0';
+	return (string);
 }

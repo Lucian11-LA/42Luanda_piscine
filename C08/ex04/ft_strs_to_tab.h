@@ -1,41 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_strs_to_tab.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:12:06 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/24 14:07:52 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/27 14:56:47 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/27 14:57:09 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+#ifndef FT_STOCK_STR_H
+# define FT_STOCK_STR_H
+
+typedef struct s_stock_str
 {
-	int		bound;
-	int		index;
-	int		*buffer;
-	int		*d;
+	int			size;
+	char		*str;
+	char		*copy;
+}				t_stock_str;
 
-	if (min >= max)
-	{
-		*range = 0;
-		return (0);
-	}
-	bound = max - min;
-	d = (buffer = malloc(bound * sizeof(int)));
-	if (!d)
-	{
-		*range = 0;
-		return (-1);
-	}
-	*range = buffer;
-	index = 0;
-	while (index < bound)
-	{
-		buffer[index] = min + index;
-		index++;
-	}
-	return (bound);
-}
+#endif

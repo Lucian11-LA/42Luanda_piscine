@@ -1,41 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:12:06 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/24 14:07:52 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/27 15:39:02 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/27 16:15:40 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
-
-int	ft_ultimate_range(int **range, int min, int max)
+#include <unistd.h>
+void ft_putchar(char c)
 {
-	int		bound;
-	int		index;
-	int		*buffer;
-	int		*d;
+	write(1,&c,1);
+}
+void ft_putstr(char *str)
+{
+	int i;
+	i = 0;
 
-	if (min >= max)
+	while(str[i])
 	{
-		*range = 0;
-		return (0);
+		write(1,&str[i],1);
+		i++;
 	}
-	bound = max - min;
-	d = (buffer = malloc(bound * sizeof(int)));
-	if (!d)
-	{
-		*range = 0;
-		return (-1);
-	}
-	*range = buffer;
-	index = 0;
-	while (index < bound)
-	{
-		buffer[index] = min + index;
-		index++;
-	}
-	return (bound);
 }

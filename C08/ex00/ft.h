@@ -1,41 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:12:06 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/24 14:07:52 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/26 18:11:41 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/26 18:15:43 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
-{
-	int		bound;
-	int		index;
-	int		*buffer;
-	int		*d;
+#ifndef FT_H
+# define FT_H
 
-	if (min >= max)
-	{
-		*range = 0;
-		return (0);
-	}
-	bound = max - min;
-	d = (buffer = malloc(bound * sizeof(int)));
-	if (!d)
-	{
-		*range = 0;
-		return (-1);
-	}
-	*range = buffer;
-	index = 0;
-	while (index < bound)
-	{
-		buffer[index] = min + index;
-		index++;
-	}
-	return (bound);
-}
+void	ft_putchar(char c);
+void	ft_swap(int *a, int *b);
+void	ft_putstr(char *str);
+int		ft_strlen(char *str);
+int		ftstrcmp(char *s1, char *s2);
+
+#endif 

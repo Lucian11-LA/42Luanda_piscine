@@ -1,41 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_boolean.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:12:06 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/24 14:07:52 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/26 18:18:29 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/26 18:25:29 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
-{
-	int		bound;
-	int		index;
-	int		*buffer;
-	int		*d;
+#ifndef FT_BOOLEAN_H
+# define FT_BOOLEAN_H
 
-	if (min >= max)
-	{
-		*range = 0;
-		return (0);
-	}
-	bound = max - min;
-	d = (buffer = malloc(bound * sizeof(int)));
-	if (!d)
-	{
-		*range = 0;
-		return (-1);
-	}
-	*range = buffer;
-	index = 0;
-	while (index < bound)
-	{
-		buffer[index] = min + index;
-		index++;
-	}
-	return (bound);
-}
+# include <unistd.h>
+
+typedef enum a_bool{
+	false = 0,
+	true = 1,
+}	t_bool;
+
+# define FALSE false
+# define TRUE true
+# define EVEN(number) (number % 2 == 0)
+# define EVEN_MSG "I have an even number of arguments.\n"
+# define ODD_MSG "I have an odd number of arguments.\n"
+# define SUCCESS 0
+#endif
