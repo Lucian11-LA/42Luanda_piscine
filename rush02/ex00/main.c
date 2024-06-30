@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_dic.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:12:06 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/30 13:13:40 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/30 13:57:07 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/30 13:57:11 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+#include "ft_rush.h"
+
+int	main(int argc, char **argv)
 {
-	int	i;
+	char	*dic;
+	int		i;
+	int		res;
 
-	if (min >= max)
+	dic = DICNAME;
+	if (argc > 2)
+		dic = argv[1];
+	if (argc == 1)
+		ft_putstr("Error\n");
+	if (argc == 2)
 	{
-		*range = NULL;
-		return (0);
+		res = ft_say_arg(dic, argv[1]);
 	}
-	*range = (int *)malloc(sizeof(int) * (max - min));
-	if (*range == NULL)
-		return (-1);
-	i = 0;
-	while (min < max)
-		(*range)[i++] = min++;
-	return (i);
+	if (argc > 2)
+	{
+		i = 2;
+		while (i < argc)
+		{
+			res = ft_say_arg(dic, argv[i]);
+			i++;
+			if (res == -2)
+				return (res);
+		}
+	}
+	return (res);
 }

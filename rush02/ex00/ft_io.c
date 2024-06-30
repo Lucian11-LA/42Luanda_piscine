@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_dic.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:12:06 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/30 13:13:40 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/30 13:57:07 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/30 13:57:11 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+#include "ft_rush.h"
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putstr(char *str)
+{
+	while (*str != 0)
+		write(1, str++, 1);
+}
+
+void	ft_puterror(char *err)
+{
+	while (*err != 0)
+		write(2, err++, 1);
+}
+
+int	ft_strl(char *str)
 {
 	int	i;
 
-	if (min >= max)
-	{
-		*range = NULL;
-		return (0);
-	}
-	*range = (int *)malloc(sizeof(int) * (max - min));
-	if (*range == NULL)
-		return (-1);
 	i = 0;
-	while (min < max)
-		(*range)[i++] = min++;
+	while (str[i])
+		i++;
 	return (i);
 }
