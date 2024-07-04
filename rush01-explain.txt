@@ -1,0 +1,461 @@
+Este código em C consiste em várias funções que realizam operações de pesquisa e manipulação de strings. Vamos analisar cada função individualmente para entender seu propósito e funcionamento.
+
+Função ft_is_spaced
+Esta função verifica se um caractere é um espaço ou um caractere de controle de espaço. No entanto, a implementação dessa função não está presente no código fornecido, então assumiremos que ela retorna 1 se o caractere for um espaço ou um caractere de controle de espaço, e 0 caso contrário.
+
+Função ft_strchar
+char *ft_strchar(char *str, char to_find)
+{
+    int i;
+    int k;
+    int count;
+
+    i = 0;
+    k = 0;
+    count = 0;
+    while (str[i])
+    {
+        if (str[i] == to_find)
+        {
+            count++;
+            k = i;
+        }
+        if (count == 1)
+            return (str + i);
+        i++;
+    }
+    if (count == 1)
+        return (str + k);
+    return ((void *)0);
+}
+Essa função procura o caractere to_find na string str. Retorna um ponteiro para a primeira ocorrência desse caractere após encontrá-lo uma vez. Se não encontrar, retorna NULL. No entanto, o controle de count parece redundante porque a função retorna imediatamente após encontrar a primeira ocorrência.
+
+Função ft_cinstr
+
+char *ft_cinstr(char *str)
+{
+    while (*str)
+    {
+        if ((*str >= 9 && *str <= 13) || *str == 32)
+            str++;
+        if (!((*str >= 'A' && *str <= 'Z') || (*str >= 'a' && *str <= 'z')))
+            str++;
+        if (((*str >= 'A' && *str <= 'Z') || (*str >= 'a' && *str <= 'z')))
+            return (str);
+    }
+    return (str);
+}
+
+Função ft_strstr
+
+char *ft_strstr(char *str, char *to_find)
+{
+    int i;
+    int k;
+
+    i = 0;
+    k = 0;
+    if (!to_find[i])
+        return (str);
+    while (str[i])
+    {
+        while (str[i + k] == to_find[k])
+        {
+            if ((to_find[k + 1] == '\0') && ft_is_spaced(str[i + k + 1]))
+                return (str + i);
+            k++;
+        }
+        k = 0;
+        i++;
+    }
+    return ((void *)0);
+}
+Esta função procura a substring to_find dentro da string str. Se encontrar to_find e o próximo caractere após to_find for um espaço (usando a função ft_is_spaced), retorna um ponteiro para o início de to_find dentro de str. Caso contrário, retorna NULL.
+
+Função ft_insrc
+
+char *ft_insrc(char *str, char *to_find)
+{
+    int i;
+    int k;
+
+    i = 0;
+    k = 0;
+    if (!to_find[i])
+        return (str);
+    while (str[i])
+    {
+        while (str[i + k] == to_find[k])
+        {
+            if ((to_find[k + 1] == '\n') && ft_is_spaced(str[i + k + 1]))
+                return (str + i);
+            k++;
+        }
+        k = 0;
+        i++;
+    }
+    return ((void *)0);
+}
+
+sta função é semelhante à ft_strstr, mas com uma diferença crucial: verifica se to_find é seguido por um caractere de nova linha \n e, se for, retorna um ponteiro para o início de to_find dentro de str. Caso contrário, retorna NULL.
+
+Resumo
+ft_is_spaced: Verifica se um caractere é um espaço (implementação não fornecida).
+ft_strchar: Encontra a primeira ocorrência de um caractere específico e retorna um ponteiro para ele.
+ft_cinstr: Avança para o primeiro caractere alfabético na string.
+ft_strstr: Encontra uma substring seguida por um espaço.
+ft_insrc: Encontra uma substring seguida por um caractere de nova linha.
+Essas funções podem ser usadas em conjunto para manipular e pesquisar strings de maneiras específicas, com base em critérios como caracteres de espaço e nova linha.
+-----functions.c
+#include <stdlib.h>
+#include <unistd.h>
+stdlib.h: Contém funções para alocação de memória, controle de processos, conversões e outras operações gerais.
+unistd.h: Proporciona acesso a API do sistema operacional POSIX, incluindo chamadas de sistema para operações básicas, como leitura e gravação de arquivos.
+
+Função ft_putchar
+void ft_putchar(char c)
+{
+    write(1, &c, 1);
+}
+
+
+Propósito: Escrever um único caractere na saída padrão (geralmente a tela).
+Parâmetro: c - O caractere a ser escrito.
+Implementação: Utiliza a chamada de sistema write para escrever o caractere.
+
+Função ft_valid_input
+int ft_valid_input(char *argv)
+{
+    int i;
+
+    i = 0;
+    while (argv[i])
+    {
+        if (!(argv[i] >= '0' && argv[i] <= '9'))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+Propósito: Verificar se a string argv contém apenas caracteres numéricos (dígitos de '0' a '9').
+Parâmetro: argv - A string a ser verificada.
+Retorno: 1 (verdadeiro) se todos os caracteres são dígitos, 0 (falso) caso contrário.
+
+Função ft_is_spaced
+int ft_is_spaced(char c)
+{
+    if ((c == ':') || (c == 32) || (c >= 9 && c <= 13))
+        return (1);
+    return (0);
+}
+
+Função ft_stread
+
+char *ft_stread(char *buffer)
+{
+    int i;
+    int k;
+
+    buffer = (char *)malloc(35);
+    k = 0;
+    while ((i = read(0, &buffer[k], 1)))
+    {
+        if (buffer[k] == '\n')
+            break;
+        k++;
+    }
+    return (buffer);
+}
+
+char *ft_stread(char *buffer)
+{
+    int i;
+    int k;
+
+    buffer = (char *)malloc(35);
+    k = 0;
+    while ((i = read(0, &buffer[k], 1)))
+    {
+        if (buffer[k] == '\n')
+            break;
+        k++;
+    }
+    return (buffer);
+}
+
+char *ft_stread(char *buffer)
+{
+    int i;
+    int k;
+
+    buffer = (char *)malloc(35);
+    k = 0;
+    while ((i = read(0, &buffer[k], 1)))
+    {
+        if (buffer[k] == '\n')
+            break;
+        k++;
+    }
+    return (buffer);
+}
+Propósito: Ler uma linha de entrada da entrada padrão (geralmente o teclado) e armazená-la em um buffer alocado dinamicamente.
+Parâmetro: buffer - Um ponteiro que será usado para armazenar o endereço do buffer alocado.
+Retorno: O ponteiro para o buffer que contém a linha lida.
+Implementação:
+Aloca 35 bytes de memória para buffer.
+Lê caracteres da entrada padrão usando a chamada de sistema read.
+Continua lendo até encontrar um caractere de nova linha ('\n').
+Retorna o ponteiro para o buffer contendo a linha lida.
+Resumo
+ft_putchar: Escreve um único caractere na saída padrão.
+ft_valid_input: Verifica se uma string contém apenas caracteres numéricos.
+ft_is_spaced: Verifica se um caractere é um espaço ou caractere de controle de espaço.
+ft_stread: Lê uma linha da entrada padrão e retorna um ponteiro para um buffer alocado dinamicamente contendo a linha lida.
+Este código pode ser usado para processar entrada de usuário, verificar se é numérica e lidar com espaços de várias formas.
+
+
+
+A biblioteca <fcntl.h> em C é usada principalmente para manipular operações de arquivos de baixo nível, fornecendo definições de constantes e declarações de funções usadas na manipulação de descritores de arquivos. Essa biblioteca é parte da API POSIX (Portable Operating System Interface), que é amplamente utilizada em sistemas Unix e Unix-like (como Linux e macOS).
+
+Funções e Definições Comuns em <fcntl.h>
+Constantes de Abertura de Arquivo:
+
+O_RDONLY: Abre o arquivo apenas para leitura.
+O_WRONLY: Abre o arquivo apenas para escrita.
+O_RDWR: Abre o arquivo para leitura e escrita.
+O_CREAT: Cria o arquivo se ele não existir.
+O_EXCL: Usado com O_CREAT, falha se o arquivo já existir.
+O_TRUNC: Trunca o arquivo para um tamanho de 0 se ele já existir.
+O_APPEND: Adiciona os dados ao final do arquivo.
+Função open:
+
+A função open é usada para abrir um arquivo e retorna um descritor de arquivo.
+
+Protótipo: int open(const char *pathname, int flags, ...);
+
+c
+Copy code
+int fd = open("file.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+Função fcntl:
+
+A função fcntl realiza várias operações sobre um descritor de arquivo.
+
+Protótipo: int fcntl(int fd, int cmd, ...);
+
+c
+Copy code
+int flags = fcntl(fd, F_GETFL);
+Função creat:
+
+A função creat é usada para criar um novo arquivo ou reescrever um arquivo existente.
+
+Protótipo: int creat(const char *pathname, mode_t mode);
+
+c
+Copy code
+int fd = creat("newfile.txt", 0644);
+Exemplos de Uso
+Aqui estão alguns exemplos de como utilizar <fcntl.h> para operações de arquivo:
+
+Exemplo 1: Abrir um Arquivo para Leitura
+c
+Copy code
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main() {
+    int fd = open("example.txt", O_RDONLY);
+    if (fd == -1) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    // Operações de leitura...
+    
+    close(fd);
+    return 0;
+}
+Exemplo 2: Criar e Escrever em um Arquivo
+c
+Copy code
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main() {
+    int fd = open("example.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd == -1) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    const char *text = "Hello, World!";
+    write(fd, text, 13);
+
+    close(fd);
+    return 0;
+}
+Exemplo 3: Usar fcntl para Obter Flags de um Descritor de Arquivo
+c
+Copy code
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main() {
+    int fd = open("example.txt", O_RDWR);
+    if (fd == -1) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    int flags = fcntl(fd, F_GETFL);
+    if (flags == -1) {
+        perror("Erro ao obter flags do arquivo");
+        close(fd);
+        return 1;
+    }
+
+    if (flags & O_RDWR) {
+        printf("Arquivo aberto para leitura e escrita\n");
+    }
+
+    close(fd);
+    return 0;
+}
+Resumo
+A biblioteca <fcntl.h> é crucial para operações de manipulação de arquivos em nível baixo em sistemas baseados em Unix. Ela permite abrir, criar, modificar e controlar descritores de arquivos com grande flexibilidade e controle.
+
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cromalde <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/07 09:08:13 by cromalde          #+#    #+#             */
+/*   Updated: 2020/11/08 19:20:08 by cromalde         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "utils.h"
+#include <unistd.h>
+
+void	ft_print(char *end)
+{
+	char *begin;
+	char *finish;
+
+	begin = ft_cinstr(end);
+	finish = ft_strchar(begin, '\n');
+	while (begin < finish)
+		ft_putchar(*begin++);
+	ft_putchar('\n');
+}
+
+void	ft_stdin(int fd, char *indict)
+{
+	char	*buffer;
+	char	*end;
+	int		i;
+
+	i = 0;
+	buffer = 0;
+	if (!(indict = (char *)malloc(2000)))
+		return ;
+	if ((fd = open("numbers.dict", O_RDONLY)) == -1)
+	{
+		write(1, "Dict Error", 11);
+		return ;
+	}
+	while ((read(fd, &indict[i], 1)))
+		i++;
+	if (close(fd) == -1)
+	{
+		write(1, "Close Error", 12);
+		return ;
+	}
+	if (((end = ft_insrc(indict, ft_stread(buffer)))) == 0)
+		return ;
+	ft_print(end);
+}
+
+void	ft_alt_start(char *argv, int fd, char *indict)
+{
+	char	*end;
+	int		i;
+
+	i = 0;
+	if (!(indict = (char *)malloc(2000)))
+		return ;
+	if ((fd = open(&argv[1], O_RDONLY)) == -1)
+	{
+		write(1, "Dict Error", 11);
+		return ;
+	}
+	while ((read(fd, &indict[i], 1)))
+		i++;
+	if (close(fd) == -1)
+	{
+		write(1, "Close Error", 12);
+		return ;
+	}
+	if (((end = ft_strstr(indict, argv))) == 0)
+		return ;
+	ft_print(end);
+}
+
+void	ft_start(char *argv, int fd, char *indict)
+{
+	char	*end;
+	int		i;
+
+	i = 0;
+	if (!(indict = (char *)malloc(2000)))
+		return ;
+	if ((fd = open("numbers.dict", O_RDONLY)) == -1)
+	{
+		write(1, "Dict Error", 11);
+		return ;
+	}
+	while ((read(fd, &indict[i], 1)))
+		i++;
+	if (close(fd) == -1)
+	{
+		write(1, "Close Error", 12);
+		return ;
+	}
+	if (((end = ft_strstr(indict, argv))) == 0)
+		return ;
+	ft_print(end);
+}
+
+int		main(int argc, char **argv)
+{
+	int		fd;
+	char	*indict;
+
+	fd = 0;
+	indict = 0;
+	if (argc > 3)
+		write(1, "Too many arguments", 18);
+	else if (argc == 2)
+	{
+		if (ft_valid_input(argv[1]))
+			ft_start(argv[1], fd, indict);
+		else
+			write(1, "Invalid argument", 16);
+	}
+	else if (argc == 3)
+	{
+		if (ft_valid_input(argv[2]))
+			ft_alt_start(argv[2], fd, indict);
+		else
+			write(1, "Invalid argument", 16);
+	}
+	else
+		ft_stdin(fd, indict);
+	free(indict);
+}

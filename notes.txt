@@ -1,0 +1,482 @@
+#include "functions.h"
+#include <stdlib.h>
+
+#include "functions.h": Inclui o arquivo de cabeçalho functions.h, onde as declarações das funções utilizadas no código são definidas.
+#include <stdlib.h>: Inclui a biblioteca padrão do C, que contém funções para alocação de memória, conversão de números, etc.
+
+-------------------------------parser.c-----------------------------------------------
+int check(int ac, char **av)
+{
+    if (ac != 2)
+        return (1);
+    if (ft_strlen(av[1]) != 31)
+        return (1);
+    return (0);
+}
+Propósito: Esta função verifica se o número de argumentos fornecidos ao programa está correto e se o comprimento do segundo argumento é exatamente 31 caracteres.
+
+Parâmetros:
+Se o número de arranha-céus visíveis (count) não corresponder à dica, a função retorna 1, indicando que a configuração atual não é válida.
+Se a contagem está correta ou se a condição inicial não é satisfeita (não estamos na última coluna), a função retorna 0.
+Contexto do Jogo
+No jogo "Arranha-céus", cada linha da grade 4x4 deve ser preenchida de modo que a quantidade de arranha-céus visíveis da esquerda para a direita corresponda às dicas fornecidas. A função check_row_left é usada para verificar essa condição ao tentar preencher uma célula na última coluna de uma linha. Se a função retornar 1, significa que a visibilidade dos arranha-céus não corresponde à dica fornecida, e portanto, a configuração atual é inválida. Se retornar 0, significa que a configuração é válida.
+int ac: Contador de argumentos (geralmente da linha de comando).
+char **av: Vetor de argumentos (array de strings).
+Funcionamento:
+
+if (ac != 2): Verifica se o número de argumentos é diferente de 2. Se for, retorna 1, indicando um erro.
+if (ft_strlen(av[1]) != 31): Verifica se o comprimento do segundo argumento (primeiro argumento fornecido pelo usuário) não é igual a 31. Se não for, retorna 1, indicando um erro.
+return (0): Se ambos os cheques passarem, retorna 0, indicando sucesso.
+No jogo "Skyscraper", as dicas geralmente são fornecidas como uma sequência de números ao redor do tabuleiro. Essas dicas indicam quantos arranha-céus são visíveis em uma linha ou coluna específica, dependendo da altura dos arranha-céus e da sua ordem.
+
+Por que verificar != 31?
+No contexto do jogo "Skyscraper", a sequência de entrada pode incluir dicas para todas as linhas e colunas. Considerando um tabuleiro 4x4, as dicas podem ser fornecidas da seguinte forma:
+
+Existem 4 dicas para cada lado do tabuleiro (esquerda, direita, cima, baixo).
+Isso totaliza 4 * 4 = 16 dicas.
+Se as dicas são separadas por espaços ou outra separação (como vírgulas ou pontos), há separadores entre cada dica.
+Se a sequência de dicas é fornecida como uma string com números e espaços (por exemplo, "1 2 3 4 4 3 2 1 1 2 3 4 4 3 2 1"), isso inclui 31 caracteres:
+16 números
+
+15 espaços (um espaço entre cada par de números)
+Portanto, a verificação ft_strlen(av[1]) != 31 assegura que a entrada tenha o formato esperado, que é uma string de 31 caracteres composta por 16 números e 15 separadores (espaços).
+--------------------------------------------------------------------------------------
+int *get_numbers(char *str)
+{
+    int i;
+    int j;
+    int *tab;
+
+    if (!(tab = malloc(sizeof(int) * 16)))
+        return (0);
+    i = -1;
+    j = 0;
+    while (str[++i] != '\0')
+        if (str[i] >= '0' && str[i] <= '9')
+            tab[j++] = ft_atoi(str + i);
+    return (tab);
+}
+--------------------------------------------------------------------------------------
+Propósito: Extrai números de uma string e os armazena em um array de inteiros.
+Contexto: Converte a sequência de dicas (fornecida como string) em um array de inteiros que representa as dicas ao redor do tabuleiro.
+-Explicação Detalhada:
+
+Alocação de Memória:
+if (!(tab = malloc(sizeof(int) * 16)))
+    return (0);
+
+Tenta alocar memória para um array de 16 inteiros.
+Retorna 0 se a alocação falhar.
+-Inicialização de Variáveis: 
+i = -1;
+j = 0;
+--Extração de Números:
+while (str[++i] != '\0')
+    if (str[i] >= '0' && str[i] <= '9')
+        tab[j++] = ft_atoi(str + i);
+Resumo
+Verificação de 31 Caracteres: Assegura que a entrada fornecida tenha o formato esperado (16 números e 15 espaços).
+Extração de Números: Converte a sequência de dicas de uma string para um array de inteiros, que pode ser usado no jogo "Skyscraper".
+------------------------------------rules.c-------------------------------------------
+
+**************************************************************************************
+
+ordem dos dígitos no argumento:
+1 - verificando as colunas de cima
+2 - verificando as colunas de baixo
+3 - verificando as linhas da esquerda
+4 - verificando a linha da direita
+-------------------------------------------------------------------------------------------
+#include "functions.h"
+
+int	check_col_down(int tab[4][4], int pos, int entry[16])
+{
+	int	i;
+	int	max;
+	int	count;
+
+	i = 3;
+	max = 0;
+	count = 0;
+	if (pos / 4 == 3)
+	{
+		while (i >= 0)
+		{
+			if (tab[i][pos % 4] > max)
+			{
+				max = tab[i][pos % 4];
+				count++;
+			}
+			i--;
+		}
+		if (entry[4 + pos % 4] != count)
+			return (1);
+	}
+	return (0);
+}
+Esse código é uma função usada em um jogo conhecido como "Sky Scrapers" ou "Arranha-céus", que é um tipo de quebra-cabeça lógico. No contexto desse jogo, você tem uma grade (neste caso, 4x4) onde você precisa preencher cada célula com números de 1 a 4, de modo que cada linha e cada coluna contenham números únicos. Além disso, existem dicas nas bordas da grade que indicam quantos "arranha-céus" visíveis você pode ver a partir daquela posição. Um arranha-céu é considerado visível se não houver arranha-céus mais altos na frente dele.
+
+Vamos analisar a função check_col_down no contexto do jogo:
+
+Descrição da Função
+Parâmetros:
+
+int tab[4][4]: A grade 4x4 do jogo onde os valores (arranha-céus) são inseridos.
+int pos: A posição na grade onde estamos tentando inserir um valor.
+int entry[16]: Um array que contém as dicas para todas as linhas e colunas.
+Como Funciona:
+Variáveis Locais:
+
+int i: Usada para iterar pelas linhas da coluna.
+int max: Mantém o maior valor encontrado enquanto itera.
+int count: Conta quantos arranha-céus são visíveis na coluna.
+Condição Inicial:
+
+if (pos / 4 == 3): Essa condição verifica se estamos na última linha da grade (pos / 4 calcula a linha a partir da posição pos).
+Contando Arranha-céus Visíveis de Baixo para Cima:
+
+A iteração começa de i = 3 (última linha) e vai até i >= 0 (primeira linha), decrementando i a cada iteração.
+Dentro do loop, verifica-se se o valor na célula atual tab[i][pos % 4] é maior que max.
+Se for, max é atualizado para esse valor e count é incrementado.
+Isso simula a contagem de arranha-céus visíveis de baixo para cima na coluna.
+Verificação das Dicas:
+
+if (entry[4 + pos % 4] != count): Aqui, verifica se o número de arranha-céus visíveis contado (count) é igual à dica fornecida (entry[4 + pos % 4]).
+entry[4 + pos % 4] acessa a dica para a coluna atual começando de baixo para cima (as dicas de colunas começam do índice 4).
+Retorno:
+
+Se o número de arranha-céus visíveis (count) não corresponder à dica, a função retorna 1, indicando que a configuração atual não é válida.
+Se a contagem está correta ou se a condição inicial não é satisfeita (não estamos na última linha), a função retorna 0.
+Contexto do Jogo:
+No jogo "Arranha-céus", o objetivo é preencher a grade de forma que todas as dicas nas bordas sejam satisfeitas. Esta função é usada para verificar se, ao preencher uma célula na última linha de uma coluna, a visibilidade dos arranha-céus de baixo para cima corresponde à dica fornecida.
+
+Esta verificação é crucial para garantir que a solução do quebra-cabeça está correta conforme as regras estabelecidas.
+-------------------------------------------------------------------------------------------
+#include "functions.h"
+
+int	check_col_up(int tab[4][4], int pos, int entry[16])
+{
+	int	i;
+	int	max;
+	int	count;
+
+	i = 0;
+	max = 0;
+	count = 0;
+	if (pos / 4 == 3)
+	{
+		while (i < 4)
+		{
+			if (tab[i][pos % 4] > max)
+			{
+				max = tab[i][pos % 4];
+				count++;
+			}
+			i++;
+		}
+		if (entry[pos % 4] != count)
+			return (1);
+	}
+	return (0);
+}
+A função check_col_up tem um propósito semelhante à função check_col_down, mas, como o nome sugere, ela verifica a contagem de arranha-céus visíveis de baixo para cima em uma coluna. Vamos analisar como essa função funciona no contexto do jogo "Arranha-céus":
+
+Descrição da Função
+Parâmetros:
+
+int tab[4][4]: A grade 4x4 do jogo onde os valores (arranha-céus) são inseridos.
+int pos: A posição na grade onde estamos tentando inserir um valor.
+int entry[16]: Um array que contém as dicas para todas as linhas e colunas.
+Como Funciona:
+Variáveis Locais:
+
+int i: Usada para iterar pelas linhas da coluna.
+int max: Mantém o maior valor encontrado enquanto itera.
+int count: Conta quantos arranha-céus são visíveis na coluna.
+Condição Inicial:
+
+if (pos / 4 == 3): Essa condição verifica se estamos na última linha da grade (pos / 4 calcula a linha a partir da posição pos).
+Contando Arranha-céus Visíveis de Cima para Baixo:
+
+A iteração começa de i = 0 (primeira linha) e vai até i < 4 (última linha), incrementando i a cada iteração.
+Dentro do loop, verifica-se se o valor na célula atual tab[i][pos % 4] é maior que max.
+Se for, max é atualizado para esse valor e count é incrementado.
+Isso simula a contagem de arranha-céus visíveis de cima para baixo na coluna.
+Verificação das Dicas:
+
+if (entry[pos % 4] != count): Aqui, verifica se o número de arranha-céus visíveis contado (count) é igual à dica fornecida (entry[pos % 4]).
+entry[pos % 4] acessa a dica para a coluna atual começando de cima para baixo (as dicas de colunas começam do índice 0).
+Retorno:
+
+Se o número de arranha-céus visíveis (count) não corresponder à dica, a função retorna 1, indicando que a configuração atual não é válida.
+Se a contagem está correta ou se a condição inicial não é satisfeita (não estamos na última linha), a função retorna 0.
+Contexto do Jogo:
+Assim como check_col_down, a função check_col_up é usada para garantir que a contagem de arranha-céus visíveis de cima para baixo em um: ft_rev_params.ca coluna específica corresponde à dica fornecida para essa coluna. No jogo "Arranha-céus", é crucial garantir que todas as dicas nas bordas da grade sejam satisfeitas para que a solução do quebra-cabeça seja válida. Esta função é chamada ao preencher uma célula na última linha de uma coluna para verificar se a visibilidade dos arranha-céus está correta de acordo com as dicas fornecidas.
+--------------------------------------------------------------------------------------------
+#include "functions.h"
+
+int	check_double(int tab[4][4], int pos, int num)
+{
+	int	i;
+
+	i = 0;
+	while (i < (pos / 4))
+	{
+		if (tab[i][pos % 4] == num)
+			return (1);
+		i++;
+	}
+	i = 0;
+	while (i < (pos % 4))
+	{
+		if (tab[pos / 4][i] == num)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+No jogo "Arranha-céus", cada linha e cada coluna da grade 4x4 deve conter números únicos de 1 a 4. A função check_double é usada par: ft_rev_params.ca garantir que, ao tentar inserir um número em uma posição específica, o número não violará essa regra de unicidade. Se a função retornar 1, significa que o número já está presente na mesma linha ou coluna, e portanto, não pode ser inserido. Se retornar 0, significa que é seguro inserir o número na posição especificada.
+-------------------------------------------------------------------------------------------
+#include "functions.h"
+
+int	check_row_left(int tab[4][4], int pos, int entry[16])
+{
+	int	i;
+	int	max;
+	int	count;
+
+	i = 0;
+	max = 0;
+	count = 0;
+	if (pos % 4 == 3)
+	{
+		while (i < 4)
+		{
+			if (tab[pos / 4][i] > max)
+			{
+				max = tab[pos / 4][i];
+				count++;
+			}
+			i++;
+		}
+		if (entry[8 + pos / 4] != count)
+			return (1);
+	}
+	return (0);
+}
+A iteração começa de i = 0 (primeira coluna) e vai até i < 4 (última coluna), incrementando i a cada iteração.
+Dentro do loop, verifica-se se o valor na célula atual tab[pos / 4][i] é maior que max.
+Se for, max é atualizado para esse valor e count é incrementado.
+Isso simula a contagem de arranha-céus visíveis da esquerda para a direita na linha.
+if (entry[8 + pos / 4] != count)
+    return (1);
+    
+    Aqui, verifica se o número de arranha-céus visíveis contado (count) é igual à dica fornecida (entry[8 + pos / 4]).
+entry[8 + pos / 4] acessa a dica para a linha atual começando da esquerda para a direita (as dicas de linhas da esquerda começam do índice 8).
+
+Se o número de arranha-céus visíveis (count) não corresponder à dica, a função retorna 1, indicando que a configuração atual não é válida.
+Se a contagem está correta ou se a condição inicial não é satisfeita (não estamos na última coluna), a função retorna 0.
+Contexto do Jogo
+No jogo "Arranha-céus", cada linha da grade 4x4 deve ser preenchida de modo que a quantidade de arranha-céus visíveis da esquerda para a direita corresponda às dicas fornecidas. A função check_row_left é usada para verificar essa condição ao tentar preencher uma célula na última coluna de uma linha. Se a função retornar 1, significa que a visibilidade dos arranha-céus não corresponde à dica fornecida, e portanto, a configuração atual é inválida. Se retornar 0, significa que a configuração é válida.
+-------------------------------------------------------------------------------------------------------
+
+
+#include "functions.h"
+
+int	check_row_right(int tab[4][4], int pos, int entry[16])
+{
+	int	i;
+	int	max;
+	int	visible;
+
+	i = 3;
+	visible = 0;
+	max = 0;
+	if (pos % 4 == 3)
+	{
+		while (i >= 0)
+		{
+			if (tab[pos / 4][i] > max)
+			{
+				max = tab[pos / 4][i];
+				visible++;
+			}
+			i--;
+		}
+		if (entry[12 + pos / 4] != visible)
+			return (1);
+	}
+	return (0);
+}
+
+A função check_row_right tem como objetivo verificar se a contagem de arranha-céus visíveis da direita para a esquerda em uma linha específica corresponde à dica fornecida. Vamos analisar detalhadamente como esta função funciona no contexto do jogo "Arranha-céus":Declara a função check_row_right, que recebe três parâmetros:
+tab[4][4]: A matriz 4x4 representando a grade do jogo.
+pos: A posição atual na grade onde estamos tentando inserir um valor.
+entry[16]: Um array contendo as dicas para todas as linhas e colunas.
+Declara e inicializa variáveis locais:
+i: Usada para iterar pelas colunas da linha: ft_rev_params.c começando da direita.
+max: Mantém o maior valor encontrado enquanto itera.
+visible: Conta quantos arranha-céus são visíveis da direita para a esquerda na linha
+if (pos % 4 == 3)
+Contando Arranha-céus Visíveis da Direita para a Esquerda:
+while (i >= 0)
+{
+    if (tab[pos / 4][i] > max)
+    {
+        max = tab[pos / 4][i];
+        visible++;
+    }
+    i--;
+}
+A iteração começa de i = 3 (última coluna) e vai até i >= 0 (primeira coluna), decrementando i a cada iteração.
+Dentro do loop, verifica-se se o valor na célula atual tab[pos / 4][i] é maior que max.
+Se for, max é atualizado para esse valor e visible é incrementado.
+Isso simula a contagem de arranha-céus visíveis da direita para a esquerda na linha.
+Verificação das Dicas:
+if (entry[12 + pos / 4] != visible)
+    return (1);
+    Aqui, verifica se o número de arranha-céus visíveis contado (visible) é igual à dica fornecida (entry[12 + pos / 4]).
+entry[12 + pos / 4] acessa a dica para a linha atual começando da direita para a esquerda (as dicas de linhas da direita começam do índice 12).
+
+Se o número de arranha-céus visíveis (visible) não corresponder à dica, a função retorna 1, indicando que a configuração atual não é válida.
+Se a contagem está correta ou se a condição inicial não é satisfeita (não estamos na última coluna), a função retorna 0.
+Contexto do Jogo: ft_rev_params.c
+No jogo "Arranha-céus", cada linha da grade 4x4 deve ser preenchida de modo que a quantidade de arranha-céus visíveis da direita para a esquerda corresponda às dicas fornecidas. A função check_row_right é usada para verificar essa condição ao tentar preencher uma célula na última coluna de uma linha. Se a função retornar 1, significa que a visibilidade dos arranha-céus não corresponde à dica fornecida, e portanto, a configuração atual é inválida. Se retornar 0, significa que a configuração é válida.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Descrição do Código
+Função solve
+A função solve é responsável por tentar preencher a grade tab de 4x4 com números de 1 a 4 de acordo com as regras do jogo. Ela utiliza recursão para testar diferentes combinações de números em cada célula da grade até encontrar uma solução válida ou determinar que não há solução possível.
+
+int solve(int tab[4][4], int entry[16], int pos)
+{
+    int size = 1; // Começa tentando preencher com o número 1
+
+    if (pos == 16)
+    {
+        return 1; // Se chegou ao final da grade, encontrou uma solução válida
+    }
+
+    while (size <= 4)
+    {
+        if (check_double(tab, pos, size) == 0)
+        {
+            tab[pos / 4][pos % 4] = size; // Tenta colocar o número 'size' na posição 'pos'
+            if (check_case(tab, pos, entry) == 0) // Verifica se a configuração atual é válida
+            {
+                if (solve(tab, entry, pos + 1) == 1) // Chama recursivamente para a próxima posição
+                {
+                    return 1; // Se encontrou uma solução válida, retorna 1
+                }
+            }
+            tab[pos / 4][pos % 4] = 0; // Backtracking: desfaz a atribuição para tentar outro número
+        }
+        size++; // Tenta o próximo número
+    }
+
+    return 0; // Retorna 0 se não encontrou solução para a configuração atual
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Variáveis:
+size: Variável que representa os números de 1 a 4 que podem ser inseridos em cada posição da grade.
+Funcionamento:
+Condição de Parada: Se pos é igual a 16, significa que todas as células foram preenchidas com sucesso, então retorna 1 (sinalizando que encontrou uma solução válida).
+
+Laço while: Itera sobre os números de 1 a 4 para tentar preencher a posição pos.
+
+Verificação de Duplicados: Utiliza a função check_double para garantir que o número size não esteja duplicado na mesma linha ou coluna.
+
+Atribuição e Verificação: Atribui o número size à posição tab[pos / 4][pos % 4] e verifica se essa atribuição não viola nenhuma das regras do jogo utilizando a função check_case.
+
+Recursão: Se a atribuição for válida, chama recursivamente solve para a próxima posição (pos + 1).
+
+Backtracking: Se a recursão retornar 1 (indicando que encontrou uma solução), retorna 1. Caso contrário, desfaz a atribuição (tab[pos / 4][pos % 4] = 0) e tenta o próximo número (size++).
+
+Retorno: Se nenhum número de 1 a 4 for válido para a posição pos, retorna 0.
+
+Função display_solution
+A função display_solution é responsável por exibir a solução encontrada na grade tab.
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Função display_solution
+A função display_solution é responsável por exibir a solução encontrada na grade tab.
+void display_solution(int tab[4][4])
+{
+    int i, j;
+
+    i = 0;
+    while (i < 4)
+    {
+        j = 0;
+        while (j < 4)
+        {
+            ft_putchar(tab[i][j] + '0'); // Converte o número para caractere e imprime
+            if (j < 3)
+                ft_putchar(' '); // Adiciona um espaço entre os números na mesma linha
+            j++;
+        }
+        ft_putchar('\n'); // Nova linha após cada linha da grade
+        i++;
+    }
+}
+Funcionamento:
+Utiliza dois laços while aninhados para percorrer cada célula da grade tab.
+Converte cada número inteiro em um caractere imprimível adicionando '0' (ASCII) ao número.
+Imprime um espaço entre os números na mesma linha e adiciona uma nova linha após cada linha da grade.
+Função init_tab
+A função init_tab inicializa a grade tab com zeros.
+void init_tab(int tab[4][4])
+{
+    int i, j;
+
+    i = 0;
+    while (i < 4)
+    {
+        j = 0;
+        while (j < 4)
+        {
+            tab[i][j] = 0; // Inicializa cada célula com zero
+            j++;
+        }
+        i++;
+    }
+}
+Funcionamento:
+Utiliza dois laços while aninhados para percorrer cada célula da grade tab.
+Atribui zero a cada célula, garantindo que a grade comece vazia.
+Função main
+A função main coordena a execução do programa, inicializando a grade, verificando os argumentos de linha de comando, resolvendo o quebra-cabeça e exibindo a solução.
+int main(int ac, char **av)
+{
+    int tab[4][4];
+    int *entry;
+
+    init_tab(tab); // Inicializa a grade com zeros
+
+    if (check(ac, av) == 0) // Verifica se os argumentos de linha de comando são válidos
+    {
+        ft_putstr("Error\n");
+        return 1;
+    }
+
+    entry = get_values(av[1]); // Obtém as dicas do quebra-cabeça
+
+    if (solve(tab, entry, 0) == 1) // Resolve o quebra-cabeça
+        display_solution(tab); // Exibe a solução encontrada
+    else
+        ft_putstr("Not find solution\n"); // Exibe uma mensagem se não encontrar solução
+
+    free(entry); // Libera a memória alocada para as dicas
+
+    return 0; // Retorna 0 para indicar sucesso
+}
+Funcionamento:
+Inicializa a grade tab com zeros usando init_tab.
+Verifica se os argumentos de linha de comando são válidos usando a função check.
+Obtém as dicas do quebra-cabeça utilizando get_values.
+Chama solve para resolver o quebra-cabeça usando a grade tab e as dicas obtidas.
+Se encontrar uma solução válida (solve retorna 1), exibe a solução usando display_solution.
+Caso contrário, exibe uma mensagem indicando que não foi possível encontrar uma solução.
+Libera a memória alocada para as dicas usando free.
+Retorna 0 para indicar que o programa foi executado com sucesso.
+Conclusão
+O código implementa uma solução eficiente para resolver o jogo "Arranha-céus" utilizando recursão e backtracking. Ele é estruturado de maneira a verificar todas as possibilidades para preencher a grade corretamente, respeitando as regras do jogo. A função solve é crucial, pois tenta todas as combinações possíveis até encontrar a solução correta ou determinar que não há solução viável. A função main coordena a execução do programa, gerenciando entrada e saída, e a função display_solution exibe a solução encontrada de maneira formatada.
+
