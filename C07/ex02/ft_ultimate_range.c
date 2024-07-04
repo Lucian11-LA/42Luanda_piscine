@@ -11,20 +11,36 @@
 /* ************************************************************************** */
 #include <stdlib.h>
 
+int	*ft_range_for_ultimate(int min, int len)
+{
+	int	*a;
+	int	i;
+
+	a = malloc(sizeof(*a) * len);
+	if (!a)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		a[i] = min;
+		++min;
+		++i;
+	}
+	return (a);
+}
+
 int	ft_ultimate_range(int **range, int min, int max)
 {
-	int	i;
+	int	len;
 
 	if (min >= max)
 	{
 		*range = NULL;
 		return (0);
 	}
-	*range = (int *)malloc(sizeof(int) * (max - min));
-	if (*range == NULL)
+	len = max - min;
+	*range = ft_range_for_ultimate(min, len);
+	if (!(*range))
 		return (-1);
-	i = 0;
-	while (min < max)
-		(*range)[i++] = min++;
-	return (i);
+	return (len);
 }

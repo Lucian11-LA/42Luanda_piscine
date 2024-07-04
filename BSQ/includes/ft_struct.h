@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft.h                                               :+:      :+:    :+:   */
+/*   ft_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gsouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 18:11:41 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/26 18:15:43 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/07/03 09:57:56 by gsouto            #+#    #+#             */
+/*   Updated: 2024/07/03 09:57:57 by gsouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_H
-# define FT_H
+#ifndef FT_STRUCT_H
+# define FT_STRUCT_H
 
-void	ft_putchar(char c);
-void	ft_swap(int *a, int *b);
-void	ft_putstr(char *str);
-int		ft_strlen(char *str);
-int		ft_strcmp(char *s1, char *s2);
+typedef struct s_map
+{
+	char	empty;
+	char	obs;
+	char	full;
+	char	**matrix;
+	int		is_valid;
+}	t_map;
+
+typedef struct s_square
+{
+	int	x_start;
+	int	y_start;
+	int	x_end;
+	int	y_end;
+}	t_square;
 
 #endif

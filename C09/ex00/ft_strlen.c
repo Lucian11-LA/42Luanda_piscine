@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft.h                                               :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 18:11:41 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/26 18:15:43 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/06/18 13:37:27 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/06/18 13:45:00 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+int	ft_strlen(char *str)
+{
+	int	i;
 
-#ifndef FT_H
-# define FT_H
-
-void	ft_putchar(char c);
-void	ft_swap(int *a, int *b);
-void	ft_putstr(char *str);
-int		ft_strlen(char *str);
-int		ft_strcmp(char *s1, char *s2);
-
-#endif
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}

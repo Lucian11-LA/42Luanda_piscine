@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_range.c                                         :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gsouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 10:19:25 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/24 11:01:48 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/07/03 10:11:28 by gsouto            #+#    #+#             */
+/*   Updated: 2024/07/03 10:11:30 by gsouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "ft_header.h"
 
-int	*ft_range(int min, int max)
+void	ft_free_map(t_map map)
 {
-	int	*a;
-	int	len;
 	int	i;
 
-	if (min >= max)
-		return (NULL);
-	len = max - min;
-	a = malloc(sizeof(*a) * len);
-	if (!a)
-		return (NULL);
 	i = 0;
-	while (i < len)
+	while (map.matrix[i])
 	{
-		a[i] = min;
-		++min;
-		++i;
+		free(map.matrix[i]);
+		i++;
 	}
-	return (a);
+	free(map.matrix);
+}
+
+void	ft_free(char **array_map)
+{
+	int	i;
+
+	i = 0;
+	while (array_map[i])
+	{
+		free(array_map[i]);
+		i++;
+	}
+	free(array_map);
 }

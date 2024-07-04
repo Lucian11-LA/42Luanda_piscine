@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
+
 void	ft_putnbr_base_v2(int nbr, char *base, char *nbrf);
 int		lenght_nbr(int nbr, char *base, int lenght);
 
@@ -108,7 +109,8 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 		return (0);
 	mednbr = ft_atoi_base(nbr, base_from);
 	lenght_nbrf = lenght_nbr(mednbr, base_to, 0);
-	d = (finalnbr = (char *)malloc(sizeof(char) * (lenght_nbrf + 1)));
+	finalnbr = (char *)malloc(sizeof(char) * (lenght_nbrf + 1));
+	d = finalnbr;
 	if (!d)
 		return (0);
 	ft_putnbr_base_v2(mednbr, base_to, finalnbr);

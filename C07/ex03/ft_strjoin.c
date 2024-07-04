@@ -13,72 +13,64 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int	ft_strlen(char *str)
+int	get_strjoin_size(int size, char **strs, char *sep)
 {
+	int	n_strs;
+	int	n_sep;
 	int	i;
+	int	j;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	n_strs = 1;
+	i = -1;
+	while (++i < size)
+	{
+		j = -1;
+		while (strs[i][++j])
+			++n_strs;
+	}
+	n_sep = 0;
+	if (size - 1 > 0)
+	{
+		i = 0;
+		while (sep[i])
+			++i;
+		n_sep = i * (size - 1);
+	}
+	return (n_strs + n_sep);
 }
 
-void	ft_process(char *str, char *sep, int *i)
+void	set_strjoin(char *join, int size, char **strs, char *sep)
 {
-	int	z;
+	int	index;
+	int	i;
+	int	j;
 
-	z = 0;
-	while (sep[z])
+	index = 0;
+	i = -1;
+	while (++i < size)
 	{
-		str[*i] = sep[z];
-		z++;
-		(*i)++;
-	}
-}
-
-void	ft_conc(char **strs, char *sep, char *str, int size)
-{
-	int		i;
-	int		j;
-	int		z;
-
-	i = 0;
-	j = 0;
-	while (j < size)
-	{
-		z = 0;
-		while (strs[j][z])
+		j = -1;
+		while (strs[i][++j])
+			join[index++] = strs[i][j];
+		if (i < size - 1)
 		{
-			str[i] = strs[j][z];
-			z++;
-			i++;
+			j = -1;
+			while (sep[++j])
+				join[index++] = sep[j];
 		}
-		if ((j + 1) < size)
-		{
-			ft_process(str, sep, &i);
-		}
-		j++;
 	}
-	str[i] = '\0';
+	join[index] = '\0';
 }
 
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
-	int		i;
-	char	*str;
-	int		length;
+	int		len;
+	char	*strjoin;
 
-	i = 0;
-	length = 0;
-	while (i < size)
-	{
-		length += ft_strlen(strs[i]);
-		i++;
-	}
-	length += ((size - 1) * ft_strlen(sep));
-	str = (char *)malloc(sizeof(char) * (length + 1));
-	if (str == ((void *)0))
-		return ((void *)0);
-	ft_conc(strs, sep, str, size);
-	return (str);
+	len = get_strjoin_size(size, strs, sep);
+	strjoin = malloc(sizeof(*strjoin) * len);
+	if (!strjoin)
+		return (NULL);
+	set_strjoin(strjoin, size, strs, sep);
+	return (strjoin);
 }

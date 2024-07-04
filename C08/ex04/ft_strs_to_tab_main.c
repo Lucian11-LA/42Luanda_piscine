@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strs_to_tab.c                                   :+:      :+:    :+:   */
+/*   ft_strs_to_tab_main.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lalfredo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 14:04:40 by lalfredo          #+#    #+#             */
-/*   Updated: 2024/06/30 15:13:43 by lalfredo         ###   ########.fr       */
+/*   Created: 2024/07/02 15:35:09 by lalfredo          #+#    #+#             */
+/*   Updated: 2024/07/02 15:35:55 by lalfredo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "ft_stock_str.h"
 
 int	ft_str_length(char *str)
@@ -65,3 +66,22 @@ struct s_stock_str	*ft_strs_to_tab(int ac, char **av)
 	array[index].copy = 0;
 	return (array);
 }
+/*
+int	main(int argc, char **argv)
+{
+	int					index;
+	struct s_stock_str	*structs;
+
+	structs = ft_strs_to_tab(argc, argv);
+	index = 0;
+	while (index < argc)
+	{
+		printf("%d\n", index);
+		printf("\t| original ", structs[index].str);
+		printf(":$%s$ @ %p\n", structs[index].str);
+		printf("\t|   copied : $%s$ @", structs[index].copy);
+		printf(" : $%s$ @ %p\n", structs[index].copy);
+		printf("\t|     size : %d\n", structs[index].size);
+		index++;
+	}
+}*/
